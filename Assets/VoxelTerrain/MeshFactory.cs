@@ -2,40 +2,40 @@
 using System.Collections;
 namespace VoxelEngine{
 public static class MeshFactory  {
-	public static float frequency;
-	public static float amplitude;
-	public static int oct;
-	public static float Gfrequency;
-	public static float Gamplitude;
-	public static int Goct;
-	public static float Cavefrequency;
-	public static float Caveamplitude;
-	public static int Caveoct;
+	public static float Frequency;
+	public static float Amplitude;
+	public static int Oct;
+	public static float GFrequency;
+	public static float GAmplitude;
+	public static int GOct;
+	public static float CaveFrequency;
+	public static float CaveAmplitude;
+	public static int CaveOct;
 	public static Vector3[,,] m_normals;
 	public static Vector3[,,] m_normals2;
-	public static PerlinNoise surfacePerlin;
-	public static PerlinNoise cavePerlin;
-	public static MarchingCubes marchingCubes;
-	public static MarchingCubes marchingCubesVoxels;
+	public static PerlinNoise SurfacePerlin;
+	public static PerlinNoise CavePerlin;
+	public static MarchingCubes MarchingCubes;
+	public static MarchingCubes MarchingCubesVoxels;
 	public static float m_surfaceLevel;
-	public static bool makecaves;
+	public static bool MakeCaves;
 
 	public static Vector3[] Createvertices(byte[,,] m_voxels,VoxelChunk chunk){
 
-		Vector3[] vertices = marchingCubes.CreateVertices(m_voxels,chunk,2,2);
+		Vector3[] vertices = MarchingCubes.CreateVertices(m_voxels,chunk,2,2);
 		return vertices;
 
 	}
 		public static Vector3[] CreateverticesVoxels(byte[,,] m_voxels,VoxelChunk chunk){
 
-		Vector3[] vertices = marchingCubesVoxels.CreateVertices(m_voxels,chunk,2,2);
+		Vector3[] vertices = MarchingCubesVoxels.CreateVertices(m_voxels,chunk,2,2);
 		return vertices;
 		
 	}
 
 		public static float SampleMountains(float x, float z, PerlinNoise perlin)
 	{
-		float w = cavePerlin.FractalNoise2D(x , z ,oct,frequency,amplitude);
+		float w = CavePerlin.FractalNoise2D(x , z ,Oct,Frequency,Amplitude);
 		//This creates the noise used for the mountains. It used something called 
 		//domain warping. Domain warping is basically offseting the position used for the noise by
 		//another noise value. It tends to create a warped effect that looks nice.
@@ -43,22 +43,22 @@ public static class MeshFactory  {
 		//The last value (32.0f) is the amp that defines (roughly) the maximum mountaion height
 		//Change this to create high/lower mountains
 
-		return Mathf.Min(0.0f, perlin.FractalNoise2D(x +w, z +w,oct,frequency,amplitude) );
+		return Mathf.Min(0.0f, perlin.FractalNoise2D(x +w, z +w,Oct,Frequency,Amplitude) );
 	}
 	
 		public static float SampleGround(float x,float z, PerlinNoise perlin)
 	{
 		//This creates the noise used for the ground.
 		//The last value (8.0f) is the amp that defines (roughly) the maximum 
-		float w = cavePerlin.FractalNoise2D(x , z ,1,Gfrequency,Gamplitude);
-		return perlin.FractalNoise2D(x+w, z+w,oct,Gfrequency,Gamplitude);
+		float w = CavePerlin.FractalNoise2D(x , z ,1,GFrequency,GAmplitude);
+		return perlin.FractalNoise2D(x+w, z+w,Oct,GFrequency,GAmplitude);
 	}
 		//not cave noise just normal noise now as it needed a noise with another seed
 		public static float SampleCaves(float x, float z, PerlinNoise perlin)
 	{
-		float w = perlin.FractalNoise2D(x , z ,1,Gfrequency,Gamplitude);
+		float w = perlin.FractalNoise2D(x , z ,1,GFrequency,GAmplitude);
 		//larger caves (A higher frequency will also create larger caves). It is unitless, 1 != 1m
-		return Mathf.Abs(perlin.FractalNoise2D(x+w, z+w,Caveoct,Cavefrequency,Caveamplitude));
+		return Mathf.Abs(perlin.FractalNoise2D(x+w, z+w,CaveOct,CaveFrequency,CaveAmplitude));
 		
 	}
 		//sample caves using simplex noise
@@ -279,15 +279,15 @@ public static class MeshFactory  {
 
 			caveht =0;
 			ht =1;
-			mountainHt = MeshFactory.SampleMountains(worldX ,worldZ, surfacePerlin);
-			groundHt = MeshFactory.SampleGround(worldX ,worldZ, surfacePerlin);
+			mountainHt = MeshFactory.SampleMountains(worldX ,worldZ, SurfacePerlin);
+			groundHt = MeshFactory.SampleGround(worldX ,worldZ, SurfacePerlin);
 
 	for(int y = 0; y < h; y++)
 				{
 
 					float worldY = y+m_pos.y;
 	if(y<h/4)
-		caveht=SampleCaves(worldX,worldZ,cavePerlin);
+		caveht=SampleCaves(worldX,worldZ,CavePerlin);
 
 	if(y > h/groundHt)ht =  mountainHt;
 	else if(y > h/groundHt)ht +=  groundHt+mountainHt;
@@ -301,7 +301,7 @@ public static class MeshFactory  {
 
 		HT-=caveht;
 		fade = 1f - Mathf.Clamp01(Mathf.Max(m_surfaceLevel, worldY)/64f);
-		if(makecaves &&y<h/2-50){
+		if(MakeCaves &&y<h/2-50){
 		cv =SampleCavesreal(worldX ,worldY,worldZ);
 		HT+=cv*fade;
 				}

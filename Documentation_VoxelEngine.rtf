@@ -1,0 +1,195 @@
+{\rtf1\ansi\ansicpg1252\deff0
+{\fonttbl
+{\f0\froman\fcharset0\fprq2\fttruetype Times New Roman;}
+{\f1\fswiss\fcharset0\fprq2\fttruetype Arial;}
+{\f2\fswiss\fcharset0\fprq2\ftnil Dingbats;}
+{\f3\froman\fcharset0\fprq2\fttruetype Symbol;}
+{\f4\fmodern\fcharset0\fprq1\fttruetype Courier New;}}
+{\colortbl
+\red0\green0\blue0;
+\red255\green255\blue255;}
+{\stylesheet
+{\s1\fi-431\li720\sbasedon29\snext29Contents 1;}
+{\s2\fi-431\li1440\sbasedon29\snext29Contents 2;}
+{\s3\fi-431\li2160\sbasedon29\snext29Contents 3;}
+{\s8\fi-431\li720\sbasedon29Lower Roman List;}
+{\s5\tx431\sbasedon25\snext29Numbered Heading 1;}
+{\s6\tx431\sbasedon26\snext29Numbered Heading 2;}
+{\s7\fi-431\li720Square List;}
+{\*\cs11\sbasedon29Endnote Text;}
+{\s4\fi-431\li2880\sbasedon29\snext29Contents 4;}
+{\s9\fi-431\li720Diamond List;}
+{\s10\fi-431\li720Numbered List;}
+{\*\cs12\fs20\superEndnote Reference;}
+{\s13\fi-431\li720Triangle List;}
+{\s14\tx431\sbasedon27\snext29Numbered Heading 3;}
+{\s15\fi-431\li720Dashed List;}
+{\s16\fi-431\li720\sbasedon10Upper Roman List;}
+{\s17\sb440\sa60\f1\fs24\b\sbasedon29\snext29Heading 4;}
+{\s18\fi-431\li720Heart List;}
+{\s35\fi-431\li720Box List;}
+{\*\cs20\fs20Reference;}
+{\s21\fi-431\li720\sbasedon10Upper Case List;}
+{\s22\fi-431\li720Bullet List;}
+{\s23\fi-431\li720Hand List;}
+{\*\cs24\fs20\sbasedon29Footnote Text;}
+{\s25\sb440\sa60\f1\fs34\b\sbasedon29\snext29Heading 1;}
+{\s26\sb440\sa60\f1\fs28\b\sbasedon29\snext29Heading 2;}
+{\s19\qc\sb240\sa120\f1\fs32\b\sbasedon29\snext29Contents Header;}
+{\s28\fi-431\li720Tick List;}
+{\s27\sb440\sa60\f1\fs24\b\sbasedon29\snext29Heading 3;}
+{\s30\fi-431\li720\sbasedon10Lower Case List;}
+{\s31\li1440\ri1440\sa120\sbasedon29Block Text;}
+{\s37\f4\sbasedon29Plain Text;}
+{\s33\tx1584\sbasedon5\snext29Section Heading;}
+{\s34\fi-431\li720Implies List;}
+{\s29\f0\fs24Normal;}
+{\s36\fi-431\li720Star List;}
+{\*\cs32\fs20\superFootnote Reference;}
+{\s38\tx1584\sbasedon5\snext29Chapter Heading;}}
+\kerning0\cf0\ftnbj\fet2\ftnstart1\ftnnar\aftnnar\ftnstart1\aftnstart1\aenddoc\revprop3{\info\uc1}\deftab720\viewkind1\paperw11905\paperh16837\margl1440\margr1440\widowctrl
+\sectd\sbknone\colsx360\pgncont\ltrsect
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch \tab \tab \tab \tab }{\s29\f0\fs40\b\ul\lang7177{\*\listtag0}Voxel Terrain Engine}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\ul\lang7177{\*\listtag0}\abinodiroverride\ltrch VoxelTerrainEngine.cs}{\s29\f0\fs24\ul\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\ul\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch Functions to call:}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch RaycastVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}(Ray ray , out RaycastHit hitinfo , float distance , LayerMask mask);}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch call this function to retrieve a voxel point in world space.  This function is a normal raycast with some math involved to retrieve the voxel coordinate in world space, alternatively you could just raycast normally and round the value to the nearest integer value, but my function works well for digging in the voxels.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch There are two versions of it, one uses a layer mask, the other does not.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch CheckVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}(Vector3 HitPoint , out VoxelChunk chunk )}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function basically checks the voxel location which you located using RaycastVoxels and returns a chunk in using the out modifier .   I use this function in game to find a tree and remove it from the chunks tree list for my tree chopping but it can be used for anything to do with the chunk for changing a value at a location etc.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch SaveTerrains}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function is used to save all terrains that have had there flag of HasChanged set to true ,}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch this flag is usually only set once the voxel value has been edited but you can set it manually if you would like to save the chunk regardless .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch Destroy(}{\s29\f0\fs24\lang7177{\*\listtag0}int x , int z)}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function is usually called from the backround thread with the x and z coordinates in local space to destroy the chunk by adding it to a list of chunks that need to be destroyed as calling destroy on another thread is not allowed.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch A pooling system needs to be implemented here so that the chunks don\uc1\u8217\'92t gather garbage .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch The rest of the functions are not to be called as they are just worker threads.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\qc\s29\itap0{\s29\f0\fs24\b\ul\lang7177{\*\listtag0}\abinodiroverride\ltrch VoxelChunk.cs}{\s29\f0\fs24\b\ul\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch To create a new chunk you first need to set some values, these values are as follows:}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch Vector3 pos}{\s29\f0\fs24\lang7177{\*\listtag0} : The position of the new chunk in localspace .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch int width}{\s29\f0\fs24\lang7177{\*\listtag0} : The width of the chunk usually between 8 and 32 wide.}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch int height}{\s29\f0\fs24\lang7177{\*\listtag0} : The max height of the chunk usually I set this to between 64 and 256.}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch NOTE}{\s29\f0\fs24\lang7177{\*\listtag0}: If you set this number above 128 you have to change the chunk width to 16 or below as you will encounter a max vertice limit otherwise.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch Functions:}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch Render}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function renders the chunk in its position using Graphics.DrawMesh.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch Im not very sure how efficient this is, but it seemed to help the fps.  I may be wrong, if you prefer not to use this and rather use a mesh renderer just comment the call to render in the VoxelTerrainEngine.cs.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch RenderGrass}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function basically renders the grass in the scene if you have any, it uses Graphics.DrawMesh to draw the individual meshes in the scene .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch Note: }{\s29\f0\fs24\lang7177{\*\listtag0}When adding grass meshes to the Voxel TerrainEngine.cs script in unity you will have to have those meshes in the scene for the grass to work.  This may seem odd, but its an optimization step which allows the grass to batch perfectly.}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch CheckVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}(Vector3 VoxelPos)}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch Can\uc1\u8217\'92t really remember why I added this, but from what I can tell it basically just checks if there\uc1\u8217\'92s a voxel at this chunk or not.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch FindVoxelType}{\s29\f0\fs24\lang7177{\*\listtag0}(Vector3 VoxelPos,byte Type)}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function will return the voxel type.  It\uc1\u8217\'92s used mostly if you have resource gathering in your game and want to get the type of material used .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch The function works by taking the voxel value which is determined by the noise algorithm and devides by the the max value which because it\uc1\u8217\'92s a byte value is 255.  It returns a value ,it then multiplies it by 8(max number of types) and then convert it to byte .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch I use this same algorithm for texturing by doing colors on the vertice.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch NOTE}{\s29\f0\fs24\lang7177{\*\listtag0}: In this algorithm, if it returns 9 it\uc1\u8217\'92s not on the right voxel. If it\uc1\u8217\'92s between 0 and 8 then it\uc1\u8217\'92s true.}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch CreateMeshesAndVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}(bool MakeNewVoxels)}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function takes your voxels which are empty and fills them with noise by calling }{\s29\f0\fs24\b\lang7177{\*\listtag0}MeshFactory.CreateVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}(Voxels , position , chunk) .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This is only called if the chunk has }{\s29\f0\fs24\b\lang7177{\*\listtag0}MakeNewVoxels}{\s29\f0\fs24\lang7177{\*\listtag0} set to true. Otherwise it loads the voxels from file by calling }{\s29\f0\fs24\b\lang7177{\*\listtag0}LoadVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}() .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch It then calls }{\s29\f0\fs24\b\lang7177{\*\listtag0}MeshFactory.MarchingCubes.CreateVertices}{\s29\f0\fs24\lang7177{\*\listtag0}(Voxels , chunk , 2 , 2).}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch The 2 and 2 at the end is just an offset for the verts .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This creates the vertices based on the marching cubes algorithm which is almost entirely created by Scrawk so huge thanks to him for the script .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch Normals are calculated by calling MeshFactory.CalculateNormals(Voxels , vertices.length , verts ).}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch We then calculate the colors for the mesh which I use for texturing of the mesh in shader .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch Basically I use the same algorithm as FindVoxelType to retrieve the value, then if the value is x i color the mesh in a certain color .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch CreateMeshesWithVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This is the function I call when editing the mesh.  I had to seperate it from }{\s29\f0\fs24\b\lang7177{\*\listtag0}CreateMeshesAndVoxels}{\s29\f0\fs24\lang7177{\*\listtag0} as creating new chunks while editing would cause oddities like messed up normals and messed up vertices due to conficts in code.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch SaveVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This is to save the chunks voxel values to file .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch How it works is I flatten the 3d array of voxels into a 1d array. Then save that array of bytes to file .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch The algorithm for doing so is a bit complex so I won\uc1\u8217\'92t go into detail .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch LoadVoxels}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This loads the voxels from file , instead of flattening the array it creates a 3d array from the 1d array so we can use those values in code.}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\b\lang7177{\*\listtag0}\abinodiroverride\ltrch CreateMesh}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\b\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This is called in update in VoxelTerrainEngine.cs, it basically just applys the mesh vertices , triangles , normals and colors to the mesh .}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\abinodiroverride\ltrch This function should be called after calling }{\s29\f0\fs24\b\lang7177{\*\listtag0}CreateMeshesAndVoxels() }{\s29\f0\fs24\lang7177{\*\listtag0}o}{\s29\f0\fs24\lang7177{\*\listtag0}r}{\s29\f0\fs24\lang7177{\*\listtag0} }{\s29\f0\fs24\b\lang7177{\*\listtag0}CreateMeshesWithVoxels() }{\s29\f0\fs24\lang7177{\*\listtag0}and has to be called on the main thread i.e. }{\s29\f0\fs24\b\lang7177{\*\listtag0}Update}{\s29\f0\fs24\lang7177{\*\listtag0}()}{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}
+\pard\plain\ltrpar\ql\s29\itap0{\s29\f0\fs24\lang7177{\*\listtag0}\par}}

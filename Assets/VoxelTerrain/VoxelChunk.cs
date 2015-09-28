@@ -31,7 +31,7 @@ public class VoxelChunk {
 	public int[]tris;
 	Vector3[] normals;
 	public Mesh mesh;
-	public bool hasvoxel;
+	public bool HasVoxel;
 	public Transform mytransform;
 	public bool canCreatemesh;
 	public bool canDraw;
@@ -44,8 +44,8 @@ public class VoxelChunk {
 	public string FileName;
 	public string SaveName;
 	public SaverVoxel VoxelSaver;
-	public bool haschanged;
-	public bool hasgrass;
+	public bool HasChanged;
+	public bool HasGrass;
 	public Camera cam;
 	int layer=0;
 	public int G = 0;
@@ -139,28 +139,28 @@ public void RenderGrass()
 			Voxels[voxelpositionX,voxelpositionY,voxelpositionZ] =value;
 
 			//tell the engine to regenerate the terrain based on new voxel data
-			haschanged=true;
+			HasChanged=true;
 
 			//send back to tell the engine its got a voxel at this coordinate
-			hasvoxel=true;
+			HasVoxel=true;
 				}
 
 
 			}
 			//send back to tell the engine it hasnt got voxel at this coordinate
-		else hasvoxel=false;
+		else HasVoxel=false;
 		
 	}
 
 		//cant remember what this does but it looks like it basically checks if theres a voxel there?
-		public bool CheckVoxels(Vector3 voxelpos ){
+public bool CheckVoxels(Vector3 VoxelPos ){
 		if(mytransform!=null)
 
-			voxelpos = mytransform.InverseTransformPoint(voxelpos);
+			VoxelPos = mytransform.InverseTransformPoint(VoxelPos);
 			
-			int voxelpositionX = Mathf.RoundToInt(voxelpos.x);
-			int voxelpositionY = Mathf.RoundToInt(voxelpos.y);
-			int voxelpositionZ = Mathf.RoundToInt(voxelpos.z);
+			int voxelpositionX = Mathf.RoundToInt(VoxelPos.x);
+			int voxelpositionY = Mathf.RoundToInt(VoxelPos.y);
+			int voxelpositionZ = Mathf.RoundToInt(VoxelPos.z);
 			
 			
 		if(voxelpositionX<Voxels.GetLength(0) && voxelpositionY<Voxels.GetLength(1)-5&&
@@ -180,13 +180,13 @@ public void RenderGrass()
 ///can have up to 8 types which will be in shader
 ///still needs work id like to have separate array that holds the types in it but it uses to much memory
 ///still dont quite understand why it uses so much memory
-public byte FindVoxelType(Vector3 voxelpos,byte type ){
+public byte FindVoxelType(Vector3 VoxelPos,byte Type ){
 		if(mytransform!=null)
-			voxelpos = mytransform.InverseTransformPoint(voxelpos);
+			VoxelPos = mytransform.InverseTransformPoint(VoxelPos);
 			
-			int voxelpositionX = Mathf.RoundToInt(voxelpos.x);
-			int voxelpositionY = Mathf.RoundToInt(voxelpos.y);
-			int voxelpositionZ = Mathf.RoundToInt(voxelpos.z);
+			int voxelpositionX = Mathf.RoundToInt(VoxelPos.x);
+			int voxelpositionY = Mathf.RoundToInt(VoxelPos.y);
+			int voxelpositionZ = Mathf.RoundToInt(VoxelPos.z);
 			
 			
 		if(voxelpositionX<Voxels.GetLength(0) && voxelpositionY<Voxels.GetLength(1)-5
@@ -195,9 +195,9 @@ public byte FindVoxelType(Vector3 voxelpos,byte type ){
 
 			float t = (float)Voxels[voxelpositionX,voxelpositionY,voxelpositionZ]/255;
 
-			type = (byte)(t*8);
+			Type = (byte)(t*8);
 
-			return type ;
+			return Type ;
 				}
 			else return 9;
 			
@@ -206,11 +206,11 @@ public byte FindVoxelType(Vector3 voxelpos,byte type ){
 //threaded mesh creation 
 // basically just creates the triangles and vertices on a thread then adds them to a mesh
 //in the main thread
-public void CreateMeshesAndvoxels(bool makenewvoxels){
+public void CreateMeshesAndvoxels(bool MakeNewVoxels){
 
 			canCreatemesh = false;
 		
-		if(makenewvoxels && VoxelSaver.GetBool("hasSavedChunk")==false){
+		if(MakeNewVoxels && VoxelSaver.GetBool("hasSavedChunk")==false){
 
 			Voxels = MeshFactory.CreateVoxels(Voxels,m_pos,this);
 			
@@ -221,7 +221,7 @@ public void CreateMeshesAndvoxels(bool makenewvoxels){
 			}
 
 			//create the verts
-			verts = MeshFactory.marchingCubes.CreateVertices(Voxels,this,2,2);
+			verts = MeshFactory.MarchingCubes.CreateVertices(Voxels,this,2,2);
 
 			//store the size so as to avoid garbage creation
 			size = verts.Length;
@@ -342,7 +342,7 @@ public void CreateMeshesWithVoxels(){
 
 		//save voxels this all works perfectly i dont think it needs much explaining only thing that could 
 		//be done is some sort of compression although i couldnt find any compression methods in unity
-	public void saveVoxels(){
+	public void SaveVoxels(){
 			//flatten array of 3d voxels
 
 			byte []voxel = new byte[Voxels.GetLength(0)*Voxels.GetLength(1)*Voxels.GetLength(2)];
@@ -457,7 +457,7 @@ public void CreateMeshesWithVoxels(){
 			col = m_mesh.AddComponent<MeshCollider>();
 			col.sharedMesh = mesh;}
 
-		if(hasgrass ==false){
+		if(HasGrass ==false){
 			//add plant placer component to mesh object 
 			plantPlacer placer = m_mesh.AddComponent<plantPlacer>();
 			//assign vertices for plant place to use to know where to place the plants and trees
@@ -466,7 +466,7 @@ public void CreateMeshesWithVoxels(){
 			//i couldnt get it to work
 			placer.control = control;
 			placer.chunk = this;
-			hasgrass = true;}
+			HasGrass = true;}
 			//set flag so engine knows it can draw mesh now
 			canDraw=true;
 			//nullify all vertices and tris and normals so as to not hold onto unnecassary information

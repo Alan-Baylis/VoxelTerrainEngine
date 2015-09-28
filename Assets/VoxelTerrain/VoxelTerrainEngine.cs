@@ -98,23 +98,23 @@ public void Start(){
 
 				VoxelChunk.generator = Generator;
 
-				MeshFactory.frequency = Frequency;
+				MeshFactory.Frequency = Frequency;
 
-				MeshFactory.amplitude = Amplitude;
+				MeshFactory.Amplitude = Amplitude;
 
-				MeshFactory.oct= Oct;
+				MeshFactory.Oct= Oct;
 
-				MeshFactory.Gfrequency = Gfrequency;
+				MeshFactory.GFrequency = Gfrequency;
 
-				MeshFactory.Gamplitude = Gamplitude;
+				MeshFactory.GAmplitude = Gamplitude;
 
-				MeshFactory.Goct = Goct;
+				MeshFactory.GOct = Goct;
 
-				MeshFactory.Cavefrequency = Cavefrequency;
+				MeshFactory.CaveFrequency = Cavefrequency;
 
-				MeshFactory.Caveamplitude = Caveamplitude;
+				MeshFactory.CaveAmplitude = Caveamplitude;
 
-				MeshFactory.Caveoct = Caveoct;
+				MeshFactory.CaveOct = Caveoct;
 
 				MeshFactory.m_surfaceLevel = m_surfaceLevel;
 
@@ -122,15 +122,15 @@ public void Start(){
 
 				m_cavePerlin = new PerlinNoise(m_surfaceSeed/2);
 
-				MeshFactory.surfacePerlin = m_surfacePerlin;
+				MeshFactory.SurfacePerlin = m_surfacePerlin;
 
-				MeshFactory.cavePerlin = m_cavePerlin;
+				MeshFactory.CavePerlin = m_cavePerlin;
 
-				MeshFactory.marchingCubes = new MarchingCubes();
+				MeshFactory.MarchingCubes = new MarchingCubes();
 
-				MeshFactory.marchingCubesVoxels = new MarchingCubes();
+				MeshFactory.MarchingCubesVoxels = new MarchingCubes();
 
-				MeshFactory.makecaves = MakeCaves;
+				MeshFactory.MakeCaves = MakeCaves;
 
 				Offset = new Vector3(m_voxelWidth, m_voxelHeight/2, m_voxelLength);
 
@@ -226,7 +226,7 @@ public void RemoveVoxels(Vector3 hitpoint,byte value){
 
 				ActiveChunks[c].SetVoxels(hitpoint,value);
 				}
-			if( ActiveChunks[c]!=null &&ActiveChunks[c].hasvoxel){
+			if( ActiveChunks[c]!=null &&ActiveChunks[c].HasVoxel){
 				
 				NewVoxelChunk.Add(ActiveChunks[c]);
 			}
@@ -238,7 +238,7 @@ public void RemoveVoxels(Vector3 hitpoint,byte value){
 				//just VoxelTerrainEngine.raycastvoxels to raycast for a
 				//voxel then check the hit.point against this
 				//should return a chunk
-public bool CheckVoxels(Vector3 hitpoint,out VoxelChunk chunk){
+public bool CheckVoxels(Vector3 HitPoint,out VoxelChunk chunk){
 
 				int C = ActiveChunks.Count;
 
@@ -246,7 +246,7 @@ public bool CheckVoxels(Vector3 hitpoint,out VoxelChunk chunk){
 
 			for(int c = 0;c < C;c++){
 
-			if(ActiveChunks[c].CheckVoxels(hitpoint)){
+			if(ActiveChunks[c].CheckVoxels(HitPoint)){
 
 						chunk = ActiveChunks[c];
 						
@@ -268,9 +268,9 @@ public void SaveTerrains(){
 
 		for(int i = 0;i < ActiveChunks.Count;i++){
 
-		if(ActiveChunks[i].haschanged && ActiveChunks[i].shouldrender){
+		if(ActiveChunks[i].HasChanged && ActiveChunks[i].shouldrender){
 
-			ActiveChunks[i].saveVoxels();
+			ActiveChunks[i].SaveVoxels();
 		}
 
 
@@ -395,8 +395,8 @@ void Destroy(int x,int z){
 				//Create the voxel data
 		
 		
-		if(m_voxelChunk[x,z].haschanged && m_voxelChunk[x,z].shouldrender)
-			m_voxelChunk[x,z].saveVoxels();
+		if(m_voxelChunk[x,z].HasChanged && m_voxelChunk[x,z].shouldrender)
+			m_voxelChunk[x,z].SaveVoxels();
 
 		if(m_voxelChunk.ContainsKey(x,z))
 			ToDestroy.Add(m_voxelChunk[x,z]);
@@ -496,7 +496,7 @@ void GenerateTerrains ()
 
 			NewVoxelChunk[C].hascollider=false;
 
-			NewVoxelChunk[C].hasvoxel=false;
+			NewVoxelChunk[C].HasVoxel=false;
 
 			NewVoxelChunk[C].CreateMeshesWithVoxels();	
 
