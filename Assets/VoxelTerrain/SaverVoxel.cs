@@ -17,8 +17,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO.Compression;
 
-namespace PreviewLabs
-{
+namespace VoxelEngine{
 	public class SaverVoxel
 	{
 		private readonly Hashtable playerPrefsHashtable = new Hashtable ();

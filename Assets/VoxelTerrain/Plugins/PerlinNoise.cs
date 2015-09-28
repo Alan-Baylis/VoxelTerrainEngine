@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+namespace VoxelEngine{
 public class PerlinNoise
 {
 	const int B = 256;
@@ -246,6 +246,7 @@ public class PerlinNoise
 		}
 	}
 
+}
 }
 
 

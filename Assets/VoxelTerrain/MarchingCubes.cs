@@ -33,67 +33,68 @@ public class MarchingCubes
 		List<Vector3> verts = new List<Vector3>();
 		
 		
-	for(int z = start; z < voxels.GetLength(2)-1-end; z++)
-		{		
-
+			for(int z = start; z < voxels.GetLength(2)-1-end; z++)
+			{		
 			for(int y = start; y < voxels.GetLength(1)-1-end; y++)
 			{
-					for(int x = start; x < voxels.GetLength(0)-1-end; x++)
-					{
+			for(int x = start; x < voxels.GetLength(0)-1-end; x++)
+			{
 				
-						int i, j, vert, idx;
-					//Get the values in the 8 neighbours which make up a cube
-						for(i = 0; i < 8; i++){
-							cube[i] = voxels[x + vertexOffset[i,0], y + vertexOffset[i,1], z + vertexOffset[i,2]];}
-					//Perform algorithm
+				int i, j, vert, idx;
+				//Get the values in the 8 neighbours which make up a cube
+			for(i = 0; i < 8; i++){
+				cube[i] = voxels[x + vertexOffset[i,0], y + vertexOffset[i,1],
+				z + vertexOffset[i,2]];}
+				//Perform algorithm
+				int flagIndex = 0;
+				float offset = 0.0f;
 
+				//Find which vertices are inside of the surface and which are outside
+			for(i = 0; i < 8; i++) if(cube[i] >= target) flagIndex |= 1<<i;
+				//Find which edges are intersected by the surface
+				int edgeFlags = cubeEdgeFlags[flagIndex];
 							
-							int flagIndex = 0;
-							float offset = 0.0f;
-							
-							
-							
-							//Find which vertices are inside of the surface and which are outside
-							for(i = 0; i < 8; i++) if(cube[i] >= target) flagIndex |= 1<<i;
-							
-							//Find which edges are intersected by the surface
-							int edgeFlags = cubeEdgeFlags[flagIndex];
-							
-							//If the cube is entirely inside or outside of the surface, then there will be no intersections
-							if(edgeFlags != 0){
+				//If the cube is entirely inside or outside of the surface,
+				//then there will be no intersections
+			if(edgeFlags != 0){
 							
 							//Find the point of intersection of the surface with each edge
-							for(i = 0; i < 12; i++)
-							{
-								//if there is an intersection on this edge
-								if((edgeFlags & (1<<i)) != 0)
+			for(i = 0; i < 12; i++)
+				{
+			//if there is an intersection on this edge
+			if((edgeFlags & (1<<i)) != 0)
 								{
-									offset = GetOffset(cube[edgeConnection[i,0]], cube[edgeConnection[i,1]]);
+				offset = GetOffset(cube[edgeConnection[i,0]], cube[edgeConnection[i,1]]);
 									
 									
-									edgeVertex[i].z = z + (vertexOffset[edgeConnection[i,0],2] + offset * edgeDirection[i,2]);
-									edgeVertex[i].y = y + (vertexOffset[edgeConnection[i,0],1] + offset * edgeDirection[i,1]);
-									edgeVertex[i].x = x + (vertexOffset[edgeConnection[i,0],0] + offset * edgeDirection[i,0]);
+				edgeVertex[i].z = z + (vertexOffset[edgeConnection[i,0],2]
+				 + offset * edgeDirection[i,2]);
+
+				edgeVertex[i].y = y + (vertexOffset[edgeConnection[i,0],1]
+				 + offset * edgeDirection[i,1]);
+
+				edgeVertex[i].x = x + (vertexOffset[edgeConnection[i,0],0]
+				 + offset * edgeDirection[i,0]);
 								}
 							}
 							
 							//Save the triangles that were found. There can be up to five per cube
-							for(i = 0; i < 5; i++)
+			for(i = 0; i < 5; i++)
 							{
-								if(triangleConnectionTable[flagIndex,3*i] < 0) break;
+			if(triangleConnectionTable[flagIndex,3*i] < 0) break;
 								
-								idx = verts.Count;
+				idx = verts.Count;
 								
-								for(j = 0; j < 3; j++)
+			for(j = 0; j < 3; j++)
 								{
-									vert = triangleConnectionTable[flagIndex,3*i+j];
-									index.Add(idx+windingOrder[j]);
-									verts.Add(edgeVertex[vert]);
+				vert = triangleConnectionTable[flagIndex,3*i+j];
+				index.Add(idx+windingOrder[j]);
+				verts.Add(edgeVertex[vert]);
 								}
 							}
 						}
 					}
-					//MarchCube(new Vector3(x,y,z), cube, verts, index);
+				//MarchCube(new Vector3(x,y,z), cube, verts, index);
 				}
 			}
 		
@@ -103,15 +104,16 @@ public class MarchingCubes
 			//If you get this error its means that the voxels array contaions to much information and
 			//a mesh larger than 65000 verts is need to represent it. You can fix this by using a smaller arrays of voxel,
 			//make less 'noisey' data, or manually split up the mesh into sub meshes.
-			Debug.Log("MarchingCubes::CreateMesh - Number of mesh verts greater than 65000. Can not create mesh");
+			Debug.Log("MarchingCubes::CreateMesh - " +
+			"Number of mesh verts greater than 65000. Can not create mesh");
 			return null;
 		}
 
 		
 		
 		
-		chunk.tris = index.ToArray();
-		return verts.ToArray();
+			chunk.tris = index.ToArray();
+			return verts.ToArray();
 
 		
 		
@@ -128,8 +130,8 @@ public class MarchingCubes
 	// between two points with the values v1 and v2
 	static float GetOffset(float v1, float v2)
 	{
-	   float delta = v2 - v1;
-	    return (delta == 0.0f) ? 1.0f : (target - v1)/delta;
+	   		float delta = v2 - v1;
+	   		return (delta == 0.0f) ? 1.0f : (target - v1)/delta;
 	}
 
 
@@ -160,36 +162,41 @@ public class MarchingCubes
 	    //Find which edges are intersected by the surface
 	    int edgeFlags = cubeEdgeFlags[flagIndex];
 	
-	    //If the cube is entirely inside or outside of the surface, then there will be no intersections
+	    //If the cube is entirely inside or outside of the surface,
+		//then there will be no intersections
 	    if(edgeFlags == 0) return;
 	
 	    //Find the point of intersection of the surface with each edge
 	    for(i = 0; i < 12; i++)
 	    {
 	        //if there is an intersection on this edge
-	        if((edgeFlags & (1<<i)) != 0)
-	        {
-	         	offset = GetOffset(cube[edgeConnection[i,0]], cube[edgeConnection[i,1]]);
+	     if((edgeFlags & (1<<i)) != 0)
+	     {
+	        offset = GetOffset(cube[edgeConnection[i,0]], cube[edgeConnection[i,1]]);
 	
-              
-				edgeVertex[i].z = pos.z + (vertexOffset[edgeConnection[i,0],2] + offset * edgeDirection[i,2]);
-                edgeVertex[i].y = pos.y + (vertexOffset[edgeConnection[i,0],1] + offset * edgeDirection[i,1]);
-				edgeVertex[i].x = pos.x + (vertexOffset[edgeConnection[i,0],0] + offset * edgeDirection[i,0]);
+			edgeVertex[i].z = pos.z + (vertexOffset[edgeConnection[i,0],2]
+			+ offset * edgeDirection[i,2]);
+
+            edgeVertex[i].y = pos.y + (vertexOffset[edgeConnection[i,0],1]
+			+ offset * edgeDirection[i,1]);
+
+			edgeVertex[i].x = pos.x + (vertexOffset[edgeConnection[i,0],0]
+			+ offset * edgeDirection[i,0]);
 	        }
 	    }
 	
 	    //Save the triangles that were found. There can be up to five per cube
 	    for(i = 0; i < 5; i++)
 	    {
-            if(triangleConnectionTable[flagIndex,3*i] < 0) break;
+        if(triangleConnectionTable[flagIndex,3*i] < 0) break;
 			
 			idx = vertList.Count;
 
-            for(j = 0; j < 3; j++)
+        for(j = 0; j < 3; j++)
 				{
-                vert = triangleConnectionTable[flagIndex,3*i+j];
-				indexList.Add(idx+windingOrder[j]);
-				vertList.Add(edgeVertex[vert]);
+        	vert = triangleConnectionTable[flagIndex,3*i+j];
+			indexList.Add(idx+windingOrder[j]);
+			vertList.Add(edgeVertex[vert]);
             }
 	    }
 	}
@@ -204,7 +211,8 @@ public class MarchingCubes
 
 	
 	//MarchTetrahedron performs the Marching Tetrahedrons algorithm on a single tetrahedron
-	void MarchTetrahedron(Vector3[] tetrahedronPosition, float[] tetrahedronValue, List<Vector3> vertList, List<int> indexList)
+	void MarchTetrahedron(Vector3[] tetrahedronPosition, float[] tetrahedronValue
+	, List<Vector3> vertList, List<int> indexList)
 	{
 		int i, j, vert, vert0, vert1, idx;
 		int flagIndex = 0, edgeFlags;
@@ -218,23 +226,29 @@ public class MarchingCubes
 	    //Find which edges are intersected by the surface
 	    edgeFlags = tetrahedronEdgeFlags[flagIndex];
 	
-	    //If the tetrahedron is entirely inside or outside of the surface, then there will be no intersections
+	    //If the tetrahedron is entirely inside or outside of the surface,
+		//then there will be no intersections
 	    if(edgeFlags == 0) return;
 
 	    //Find the point of intersection of the surface with each edge
 	    for(i = 0; i < 6; i++)
 	    {
             //if there is an intersection on this edge
-            if((edgeFlags & (1<<i)) != 0)
+        if((edgeFlags & (1<<i)) != 0)
             {
-                vert0 = tetrahedronEdgeConnection[i,0];
-                vert1 = tetrahedronEdgeConnection[i,1];
-                offset = GetOffset(tetrahedronValue[vert0], tetrahedronValue[vert1]);
-                invOffset = 1.0f - offset;
+           vert0 = tetrahedronEdgeConnection[i,0];
+           vert1 = tetrahedronEdgeConnection[i,1];
+           offset = GetOffset(tetrahedronValue[vert0], tetrahedronValue[vert1]);
+           invOffset = 1.0f - offset;
 
-                edgeVertex[i].x = invOffset*tetrahedronPosition[vert0].x + offset*tetrahedronPosition[vert1].x;
-                edgeVertex[i].y = invOffset*tetrahedronPosition[vert0].y + offset*tetrahedronPosition[vert1].y;
-                edgeVertex[i].z = invOffset*tetrahedronPosition[vert0].z + offset*tetrahedronPosition[vert1].z;     
+           edgeVertex[i].x = invOffset*tetrahedronPosition[vert0].x
+						+ offset*tetrahedronPosition[vert1].x;
+
+           edgeVertex[i].y = invOffset*tetrahedronPosition[vert0].y
+						+ offset*tetrahedronPosition[vert1].y;
+
+           edgeVertex[i].z = invOffset*tetrahedronPosition[vert0].z
+						+ offset*tetrahedronPosition[vert1].z;     
             }
 	    }
 		
@@ -263,7 +277,8 @@ public class MarchingCubes
 		float[] tetrahedronValue = new float[4];
 		
 		//Make a local copy of the cube's corner positions
-		for(i = 0; i < 8; i++) cubePosition[i] = new Vector3( pos.x + vertexOffset[i,0], pos.y + vertexOffset[i,1], pos.z + vertexOffset[i,2]);
+		for(i = 0; i < 8; i++) cubePosition[i] = new Vector3( pos.x + vertexOffset[i,0],
+		pos.y + vertexOffset[i,1], pos.z + vertexOffset[i,2]);
 		
 		for(i = 0; i < 6; i++)
 		{
@@ -339,7 +354,8 @@ public class MarchingCubes
 	
 	// For any edge, if one vertex is inside of the surface and the other is outside of the surface
 	//  then the edge intersects the surface
-	// For each of the 4 vertices of the tetrahedron can be two possible states : either inside or outside of the surface
+	// For each of the 4 vertices of the tetrahedron can be two possible states
+	// either inside or outside of the surface
 	// For any tetrahedron the are 2^4=16 possible sets of vertex states
 	// This table lists the edges intersected by the surface for all 16 possible vertex states
 	// There are 6 edges.  For each entry in the table, if edge #n is intersected, then bit #n is set to 1
@@ -381,7 +397,8 @@ public class MarchingCubes
 
 	// For any edge, if one vertex is inside of the surface and the other is outside of the surface
 	//  then the edge intersects the surface
-	// For each of the 8 vertices of the cube can be two possible states : either inside or outside of the surface
+	// For each of the 8 vertices of the cube can be two possible states :
+	//either inside or outside of the surface
 	// For any cube the are 2^8=256 possible sets of vertex states
 	// This table lists the edges intersected by the surface for all 256 possible vertex states
 	// There are 12 edges.  For each entry in the table, if edge #n is intersected, then bit #n is set to 1

@@ -4,14 +4,14 @@ using VoxelEngine;
 using System.Collections.Generic;
 
 public class plantPlacer : MonoBehaviour {
-	public Vector3[] vertices;
-	public static GameObject[] trees;
-	public static GameObject[] grass;
-	public static float[] treesWeights;
-	public static float[] grassWeights;
+	public Vector3[] Vertices;
+	public static GameObject[] Trees;
+	public static GameObject[] Grass;
+	public static float[] TreesWeights;
+	public static float[] GrassWeights;
 	public int maxTrees;
 	public int maxGrass;
-	public static VoxelTerrainEngine terain;
+	public static VoxelTerrainEngine m_Terrain;
 	public static int chance;
 	public VoxelChunk chunk;
 	public int G = 0;
@@ -31,72 +31,109 @@ public class plantPlacer : MonoBehaviour {
 	
 		cam =Camera.main;
 		player = Camera.main.transform;
-		if(terain==null){
-			terain = GameObject.FindObjectOfType<VoxelTerrainEngine>();
+		if(m_Terrain==null){
+			m_Terrain = GameObject.FindObjectOfType<VoxelTerrainEngine>();
 		}
-		thispos = new Vector3(transform.position.x+(terain.m_voxelWidth/2),transform.position.y+(terain.m_voxelHeight/2),transform.position.z+(terain.m_voxelWidth/2));
+			thispos = new Vector3(transform.position.x+(m_Terrain.m_voxelWidth/2)
+			,transform.position.y+(m_Terrain.m_voxelHeight/2),transform.position.z
+		    +(m_Terrain.m_voxelWidth/2));
 
-		UnityEngine.Random.seed =terain.m_surfaceSeed;
+			UnityEngine.Random.seed =m_Terrain.m_surfaceSeed;
+			//Fill arrays with grass and trees from terrain engine
 		if(maxTrees==0){
-		maxTrees = terain.maxTrees;
-		maxGrass = terain.maxGrass;
-		grass = terain.grass;
-			trees = terain.trees;
-		grassWeights = terain.grassWeights;
-		treesWeights= terain.treesWeights;}
-		int g = grass.Length;
-		for(int t=0;t<grassWeights.Length;t++)
-			totalweights+=grassWeights[t];
+
+			maxTrees = m_Terrain.MaxTrees;
+
+			maxGrass = m_Terrain.MaxGrass;
+
+			Grass = m_Terrain.Grass;
+
+			Trees = m_Terrain.Trees;
+
+			GrassWeights = m_Terrain.GrassWeights;
+
+			TreesWeights= m_Terrain.TreesWeights;
+		}
+			int g = Grass.Length;
+
+			for(int t=0;t<GrassWeights.Length;t++)
+			totalweights+=GrassWeights[t];
+
 		if(mesh==null){
-		mesh = new Mesh[g];
+
+			mesh = new Mesh[g];
+
 			material = new Material[g];
+
 		for(int i =0;i < g;i++){
-			mesh[i]=grass[i].GetComponent<MeshFilter>().mesh;
-			material[i]=grass[i].GetComponent<MeshRenderer>().material;
+
+			mesh[i]=Grass[i].GetComponent<MeshFilter>().mesh;
+
+			material[i]=Grass[i].GetComponent<MeshRenderer>().material;
+
 			}}
-	StartCoroutine(spawnstuff());}
-	IEnumerator spawnstuff(){
-		yield return new WaitForSeconds(1);
-		chance = UnityEngine.Random.Range(1,10);
-		int T = trees.Length;
-		int g = grass.Length;
-		int V = vertices.Length;
-		layer = LayerMask.NameToLayer(terain.grassLayerName);
+			StartCoroutine(spawnstuff());}
+IEnumerator spawnstuff(){
+
+			yield return new WaitForSeconds(1);
+
+			chance = UnityEngine.Random.Range(1,10);
+
+			int T = Trees.Length;
+
+			int g = Grass.Length;
+
+			int V = Vertices.Length;
+
+			layer = LayerMask.NameToLayer(m_Terrain.GrassLayerName);
 
 			chance = UnityEngine.Random.Range(1,10);
 			G=0;
-		RaycastHit hit;
-			for(int i = 0;i < V;i++){
-				if(G<maxGrass ){
-				int v = Random.Range(0,V);
-				if(Physics.Raycast(vertices[v]+transform.position,Vector3.up,out hit,500,terain.mask )==false){
+			RaycastHit hit;
+		for(int i = 0;i < V;i++){
+		if(G<maxGrass ){
 
-					int R =0;
-					float TWeights = 0;
-					//basic weighting of grass which can be set up on Terrain script for each grass values range is 0.0f to 10.0f
-					weight = Random.Range(0,totalweights);
-					for(int t=0;t<grassWeights.Length;t++){
-						if(TWeights<=weight){
-						TWeights+=grassWeights[t];
+		   int v = Random.Range(0,V);
 
-						if(TWeights>weight){
-							R=t;}
+		if(Physics.Raycast(Vertices[v]+transform.position,Vector3.up,out hit,500,m_Terrain.mask )==false){
+
+			int R =0;
+
+			float TWeights = 0;
+
+			//basic weighting of grass which can be set up on Terrain script
+			//for each grass values range is 0.0f to 10.0f
+
+			weight = Random.Range(0,totalweights);
+
+		for(int t=0;t<GrassWeights.Length;t++){
+		if(TWeights<=weight){
+
+		   TWeights+=GrassWeights[t];
+
+		if(TWeights>weight){
+		   R=t;}
 
 					}
 					}
 					
-					//supposed to check if alpha value is greater then x place grass here but couldnt get it to work
-					//maybe someone else knows how to do it
-					if(control[v].a<0.9f&&control[i].a>0.001f){
-					G++;
-				//int R =UnityEngine.Random.Range(0,g);
-				chunk.grassmesh.Add(mesh[R]);
-				chunk.grassmat.Add(material[R] );
-					chunk.rot.Add(Random.Range(0.0f,360.0f));
-					if(Physics.Raycast(vertices[v]+transform.position+Vector3.up+(Vector3.right*Random.Range(-1.0f,1.0f)),Vector3.down,out hit,10,terain.mask )){
-				chunk.pos.Add(hit.point);
+			//supposed to check if alpha value is greater then x place grass here but couldnt get it to work
+			//maybe someone else knows how to do it
+		if(control[v].a<0.9f&&control[i].a>0.001f){
+			G++;
+
+			chunk.GrassMesh.Add(mesh[R]);
+
+			chunk.GrassMat.Add(material[R] );
+
+			chunk.Rot.Add(Random.Range(0.0f,360.0f));
+
+		if(Physics.Raycast(Vertices[v]+transform.position+Vector3.up+
+		  (Vector3.right*Random.Range(-1.0f,1.0f)),Vector3.down,out hit,10,m_Terrain.mask )){
+
+			chunk.Pos.Add(hit.point);
 					}
-					else chunk.pos.Add(vertices[v]+transform.position);
+		else chunk.Pos.Add(Vertices[v]+transform.position);
 				}
 				}
 
@@ -104,38 +141,62 @@ public class plantPlacer : MonoBehaviour {
 		}
 	//if the voxels were changed load the changes im going to implement this with the grass as well
 		// so that we dont get grass in tunnels 
-			if(chunk.VoxelSaver.GetFloat("TreeCount")!=0){
+		if(chunk.VoxelSaver.GetFloat("TreeCount")!=0){
 
-				for(int i = 0;i < chunk.VoxelSaver.GetFloat("TreeCount");i++){
-					gameo = Instantiate (trees[(int)chunk.VoxelSaver.GetFloat(" index "+i)],Vector3.zero,Quaternion.identity )as GameObject;
-					gameo.transform.position = new Vector3(
-					chunk.VoxelSaver.GetFloat("x"+i),
-					chunk.VoxelSaver.GetFloat("y"+i),
-						chunk.VoxelSaver.GetFloat("z"+i));
-					chunk.treelist.Add(gameo.transform.position);
-					chunk.treeindex.Add((int)chunk.VoxelSaver.GetFloat(" index "+i));
+		for(int i = 0;i < chunk.VoxelSaver.GetFloat("TreeCount");i++){
+
+			gameo = Instantiate (Trees[(int)chunk.VoxelSaver.GetFloat
+
+			(" index "+i)],Vector3.zero,Quaternion.identity )as GameObject;
+
+			gameo.transform.position = new Vector3(
+
+			chunk.VoxelSaver.GetFloat("x"+i),
+
+			chunk.VoxelSaver.GetFloat("y"+i),
+
+			chunk.VoxelSaver.GetFloat("z"+i));
+
+			chunk.treelist.Add(gameo.transform.position);
+
+			chunk.treeindex.Add((int)chunk.VoxelSaver.GetFloat(" index "+i));
 			}
-				chunk.VoxelSaver.DeleteAll();
-				chunk.VoxelSaver.Flush();
+
+			chunk.VoxelSaver.DeleteAll();
+
+			chunk.VoxelSaver.Flush();
 			}
 			else{
-				if(chance==2||chance ==7||chance==9)
-		for(int i = 0;i < maxTrees;i++){
-				int t =UnityEngine.Random.Range(0,V);
-				int num = UnityEngine.Random.Range(0,T);
-				if(Physics.Raycast(vertices[t]+transform.position,Vector3.up,out hit,500,terain.mask )==false&&trees.Length>0){
 
-					gameo = Instantiate (trees[num],Vector3.zero,Quaternion.identity )as GameObject;
+			if(chance==2||chance ==7||chance==9)
+
+			for(int i = 0;i < maxTrees;i++){
+
+				int t =UnityEngine.Random.Range(0,V);
+
+				int num = UnityEngine.Random.Range(0,T);
+
+			if(Physics.Raycast(Vertices[t]+transform.position,Vector3.up,out hit
+			   ,500,m_Terrain.mask )==false&&Trees.Length>0){
+
+				gameo = Instantiate (Trees[num],Vector3.zero,Quaternion.identity )as GameObject;
+
 				gameo.transform.parent = transform;
-				gameo.transform.position = vertices[t]+transform.position+Vector3.down;
+
+				gameo.transform.position = Vertices[t]+transform.position+Vector3.down;
+
 				gameo.isStatic = gameObject.isStatic;
+
 				chunk.treelist.Add(gameo.transform.position);
+
 				chunk.treeindex.Add(num);
 			}
 			}
 		}
 			chance = UnityEngine.Random.Range(1,10);
-		vertices=null;
+
+			Vertices=null;
+
 			Destroy(this);
 	}
 	// Update is called once per frame

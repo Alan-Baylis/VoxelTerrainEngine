@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Util.Pair
+namespace VoxelEngine.DoubleKeyDictionary
 {
     public class IntPair
     {

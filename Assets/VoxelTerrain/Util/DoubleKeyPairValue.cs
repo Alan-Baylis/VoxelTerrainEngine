@@ -1,5 +1,5 @@
 ﻿// DoubleKeyDictionary as described at http://blog.noocyte.net/2008/02/18/double-key-dictionary/
-namespace Util.DoubleKeyDictionary
+namespace VoxelEngine.DoubleKeyDictionary
 {
     public class DoubleKeyPairValue<K, T, V>
     {

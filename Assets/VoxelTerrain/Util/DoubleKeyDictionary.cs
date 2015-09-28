@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Util.DoubleKeyDictionary
+namespace VoxelEngine.DoubleKeyDictionary
 {
     public class DoubleKeyDictionary<K, T, V> : IEnumerable<DoubleKeyPairValue<K, T, V>>, IEquatable<DoubleKeyDictionary<K, T, V>>
     {
