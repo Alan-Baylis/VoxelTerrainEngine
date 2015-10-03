@@ -10,7 +10,7 @@
 		_GoldTex("GoldTex", 2D) = "white" {}
 		_GunPowderTex("GunPowderTex", 2D) = "white" {}
 		_TungstenTex("TungstenTex", 2D) = "white" {}
-
+		_Blending ("Blending" , Range( 0.0001 ,0.25 ))= 0.5
 	}
 	SubShader 
 	{
@@ -24,6 +24,7 @@
 		#pragma target 3.0
 
 		sampler2D _SandTex, _GravelTex, _RockTex,_CliffTex,_IronTex,_GoldTex,_GunPowderTex,_TungstenTex;
+		float _Blending;
 		struct Input 
 		{
 			float3 worldPos;
@@ -32,72 +33,85 @@
 			//INTERNAL_DATA
 		};
 		
-		fixed3 TriplanarSample(sampler2D tex, fixed3 worldPosition, fixed3 projNormal, float scale)
+	
+		fixed4 TriplanarSample(sampler2D tex, fixed3 worldPosition, fixed3 projNormal, float scale)
 		{
-			fixed3 cZY = tex2D(tex, worldPosition.zy * scale);
-			fixed3 cXZ = tex2D(tex, worldPosition.xz * scale);
-			fixed3 cXY = tex2D(tex, worldPosition.xy * scale);
+			fixed4 cZY = tex2D(tex, worldPosition.zy * scale);
+			fixed4 cXZ = tex2D(tex, worldPosition.xz * scale);
+			fixed4 cXY = tex2D(tex, worldPosition.xy * scale);
 			
 			cXY = lerp(cXY, cXZ, projNormal.y);
 			return lerp(cXY, cZY, projNormal.x);
 		}
 		
+		
+		
+		float4 blend(float4 texture1, float a1, float4 texture2, float a2)
+		{
+	
+    	float depth = _Blending;
+    	float ma = max(texture1.a + a1, texture2.a + a2) - depth;
 
+    	float b1 = max(texture1.a + a1 - ma, 0);
+    	float b2 = max(texture2.a + a2 - ma, 0);
+
+    	return (texture1.rgba * b1 + texture2.rgba * b2) / (b1 + b2);
+		}
+		
+		
+		
 		void surf(Input IN, inout SurfaceOutputStandard o) 
 		{
 			float3 projNormal = saturate(pow(IN.worldNormal * 1.5, 4));
 			
-			fixed3 sand = TriplanarSample(_SandTex, IN.worldPos, projNormal, 1.0);
+			float4 sand = TriplanarSample(_SandTex, IN.worldPos, projNormal, 1.0);
 			
-			fixed3 gravel = TriplanarSample(_GravelTex, IN.worldPos, projNormal, 1.0);
+			float4 gravel = TriplanarSample(_GravelTex, IN.worldPos, projNormal, 1.0);
 			
-			fixed3 rock = TriplanarSample(_RockTex, IN.worldPos, projNormal, 0.1);
+			float4 rock = TriplanarSample(_RockTex, IN.worldPos, projNormal, 0.1);
+			
+			float4 cliff = TriplanarSample(_CliffTex, IN.worldPos, projNormal, 1.0);
+			
+			float4 Iron = TriplanarSample(_IronTex, IN.worldPos, projNormal, 1.0);
+			
+			float4 Gold = TriplanarSample(_GoldTex, IN.worldPos, projNormal, 1.0);
+			
+			float4 Gunpowder = TriplanarSample(_GunPowderTex, IN.worldPos, projNormal, 0.1);
 
-			fixed3 cliff = TriplanarSample(_CliffTex, IN.worldPos, projNormal, 1.0);
-			
-			fixed3 Iron = TriplanarSample(_IronTex, IN.worldPos, projNormal, 1.0);
-			
-			fixed3 Gold = TriplanarSample(_GoldTex, IN.worldPos, projNormal, 1.0);
-			
-			fixed3 Gunpowder = TriplanarSample(_GunPowderTex, IN.worldPos, projNormal, 0.1);
-
-			fixed3 Tungsten = TriplanarSample(_TungstenTex, IN.worldPos, projNormal, 1.0);
-			
-			
-			
-
-                 
+			float4 Tungsten = TriplanarSample(_TungstenTex, IN.worldPos, projNormal, 1.0);
+		
 			float4 controlMap = IN.color;
-			fixed3 col= 0;
-			
-			if(controlMap.r<0.9f&&controlMap.r>0.0f)
-			col = lerp(col, rock, controlMap.r);
-			
-			if(controlMap.g<0.9f&&controlMap.g>0.0f)
-			col = lerp(col,sand , controlMap.g);
+			float4 col= 0;
 			
 			
+			if(controlMap.r<0.71f&&controlMap.r>_Blending)
+			col = blend(sand,controlMap.r, rock,controlMap.r );
 			
-			if(controlMap.b<0.9f&&controlMap.b>0.0f)
-			col = lerp(col, gravel, controlMap.b);
+			if(controlMap.g<0.71f&&controlMap.g>_Blending)
+			col = blend(col,controlMap.g,sand , controlMap.g);
+			
+			
+			
+			if(controlMap.b<0.71f&&controlMap.b>_Blending)
+			col = blend(col,controlMap.b, gravel, controlMap.b);
 			
 		
 			
-			if(controlMap.a<0.9f&&controlMap.a>0.0f)
-			col = lerp(col, cliff, controlMap.a);
+			if(controlMap.a<0.71f&&controlMap.a>_Blending)
+			col = blend(col,controlMap.a, cliff, controlMap.a);
 			
 			if(controlMap.r>0.5f)
-			col = lerp(col, Iron, controlMap.r);
+			col = blend(col,controlMap.r, Iron, controlMap.r);
 			
 			
-			//if(controlMap.g>0.5f)
-			//col = lerp(col, Gold, controlMap.g);
+			if(controlMap.g>0.5f)
+			col = blend(col,controlMap.g, Gold, controlMap.g);
 			
 				if(controlMap.b>0.5f)
-			col = lerp(col, Gunpowder, controlMap.b);
+			col = blend(col,controlMap.b, Gunpowder, controlMap.b);
 			
 			if(controlMap.a>0.5f)
-			col = lerp(col, Tungsten , controlMap.a);
+			col = blend(col,controlMap.a ,Tungsten , controlMap.a);
 			
 
 			
