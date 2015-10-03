@@ -10,7 +10,7 @@
 		_GoldTex("GoldTex", 2D) = "white" {}
 		_GunPowderTex("GunPowderTex", 2D) = "white" {}
 		_TungstenTex("TungstenTex", 2D) = "white" {}
-		_Blending ("Blending" , Range( 0.0001 ,0.25 ))= 0.5
+		_Blending ("Blending" , Range( 0.0001 ,0.5 ))= 0.5
 		_FBlending ("Fuzzy Blending" , Range( 0.0001 ,0.25 ))= 0.5
 	}
 	SubShader 
@@ -52,10 +52,10 @@
 		{
 	
     	float depth = _Blending;
-    	float ma = max(texture1.a + a1, texture2.a + a2) - depth;
+    	float ma = max(texture1.a * a1, texture2.a * a2) - depth;
 
-    	float b1 = max(texture1.a + a1 - ma, 0);
-    	float b2 = max(texture2.a + a2 - ma, 0);
+    	float b1 = max(texture1.a * a1 - ma, 0);
+    	float b2 = max(texture2.a * a2 - ma, 0);
 
     	return ((texture1.rgba * b1) + (texture2.rgba * b2)) / (b1 + b2);
 		}
@@ -86,21 +86,20 @@
 			float4 col= 0;
 			
 			
-			if(controlMap.r<0.71f&&controlMap.r>_FBlending)
-			col = lerp(sand,blend(sand,sand.a, rock,rock.a ),controlMap.r+0.50f);
 			
 			if(controlMap.g<0.71f&&controlMap.g>_FBlending)
-			col =	lerp(col,blend(col,col.a,sand , sand.a),controlMap.g+0.50f);
+			col =	lerp(col,blend(sand,controlMap.g*2,sand , controlMap.g*2),controlMap.g*2);
 			
-			
+			if(controlMap.r<0.71f&&controlMap.r>_FBlending)
+			col = lerp(col,blend(col,controlMap.r*2, rock,controlMap.r*2 ),controlMap.r*2);
 			
 			if(controlMap.b<0.71f&&controlMap.b>_FBlending)
-			col = lerp(col,blend(col,col.a, gravel, gravel.a),controlMap.b+0.50f);
+			col = lerp(col,blend(col,controlMap.b*2, gravel, controlMap.b*2),controlMap.b*2);
 			
 		
 			
 			if(controlMap.a<0.71f&&controlMap.a>_FBlending)
-			col = lerp(col,blend(col,col.a, cliff,cliff.a), controlMap.a+0.50f);
+			col = lerp(col,blend(col,controlMap.a*2, cliff,controlMap.a*2), controlMap.a*2);
 			
 			if(controlMap.r>0.5f)
 			col = lerp(col,blend(col,controlMap.r, Iron, controlMap.r),controlMap.a);
