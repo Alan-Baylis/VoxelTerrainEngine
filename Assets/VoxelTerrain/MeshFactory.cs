@@ -2,15 +2,7 @@
 using System.Collections;
 namespace VoxelEngine{
 public static class MeshFactory  {
-	public static float Frequency;
-	public static float Amplitude;
-	public static int Oct;
-	public static float GFrequency;
-	public static float GAmplitude;
-	public static int GOct;
-	public static float CaveFrequency;
-	public static float CaveAmplitude;
-	public static int CaveOct;
+	public static VoxelTerrainEngine generator;
 	public static Vector3[,,] m_normals;
 	public static Vector3[,,] m_normals2;
 	public static PerlinNoise SurfacePerlin;
@@ -33,50 +25,7 @@ public static class MeshFactory  {
 		
 	}
 
-		public static float SampleMountains(float x, float z, PerlinNoise perlin)
-	{
-		float w = CavePerlin.FractalNoise2D(x , z ,Oct,Frequency,Amplitude);
-		//This creates the noise used for the mountains. It used something called 
-		//domain warping. Domain warping is basically offseting the position used for the noise by
-		//another noise value. It tends to create a warped effect that looks nice.
-		//Clamp noise to 0 so mountains only occur where there is a positive value
-		//The last value (32.0f) is the amp that defines (roughly) the maximum mountaion height
-		//Change this to create high/lower mountains
 
-		return Mathf.Min(0.0f, perlin.FractalNoise2D(x +w, z +w,Oct,Frequency,Amplitude) );
-	}
-	
-		public static float SampleGround(float x,float z, PerlinNoise perlin)
-	{
-		//This creates the noise used for the ground.
-		//The last value (8.0f) is the amp that defines (roughly) the maximum 
-		float w = CavePerlin.FractalNoise2D(x , z ,1,GFrequency,GAmplitude);
-		return perlin.FractalNoise2D(x+w, z+w,Oct,GFrequency,GAmplitude);
-	}
-		//not cave noise just normal noise now as it needed a noise with another seed
-		public static float SampleCaves(float x, float z, PerlinNoise perlin)
-	{
-		float w = perlin.FractalNoise2D(x , z ,1,GFrequency,GAmplitude);
-		//larger caves (A higher frequency will also create larger caves). It is unitless, 1 != 1m
-		return Mathf.Abs(perlin.FractalNoise2D(x+w, z+w,CaveOct,CaveFrequency,CaveAmplitude));
-		
-	}
-		//sample caves using simplex noise
-		public static float SampleCavesreal(float x,float y, float z)
-		{
-		//The creates the noise used for the caves. It uses domain warping like the moiuntains
-
-		//to creat long twisting caves.
-
-		//The last vaule is the cave amp and defines the maximum cave diameter. A larger value will create
-
-		float w = SimplexNoise.Noise.Generate(x /28,y/28, z/28);
-
-		//larger caves (A higher frequency will also create larger caves). It is unitless, 1 != 1m
-
-		return SimplexNoise.Noise.Generate(x/550+w,y/650+w, z/550+w)*32;
-			
-		}
 
 		//commented out as it no longer works
 	/*public float [,,] SmoothVoxels(float [,,]m_voxels)
@@ -250,77 +199,57 @@ public static class MeshFactory  {
 
 
 		//function to create the voxel noises and caves etc.
-		public static byte[,,]CreateVoxels(byte[,,] m_voxels,Vector3 m_pos,VoxelChunk chunk)
+	public static byte[,,]CreateVoxels(byte[,,] m_voxels,Vector3 m_pos,VoxelChunk chunk,NoiseModule noiseModule)
 	{
 		//float startTime = Time.realtimeSinceStartup;
 		
 		//Creates the data the mesh is created form. Fills m_voxels with values between -1 and 1 where
 		//-1 is a soild voxel and 1 is a empty voxel.
-			int w = m_voxels.GetLength(0);
-			int h= m_voxels.GetLength(1);
-			int l = m_voxels.GetLength(2);
-			float caveht =0;
-			float ht =1;
-			float mountainHt = 0;
-			float groundHt = 0;
-			float HT = 0;
-			float cv =0;
-			float fade = 0;
+
+		int w = m_voxels.GetLength(0);
+		int h= m_voxels.GetLength(1);
+		int l = m_voxels.GetLength(2);
+		float worldX;
+		float worldZ;
+		float worldY;
+			float ht;
 	for(int x = 0; x < w; x++)
 			{
 	for(int z = 0; z < l; z++)
 			{
+		
 			//world pos is the voxels position plus the voxel chunks position
-			float worldX = x+m_pos.x;
-			float worldZ = z+m_pos.z;
-				
-				
-
-
-			caveht =0;
-			ht =1;
-			mountainHt = MeshFactory.SampleMountains(worldX ,worldZ, SurfacePerlin);
-			groundHt = MeshFactory.SampleGround(worldX ,worldZ, SurfacePerlin);
+		worldX = x+m_pos.x;
+		worldZ = z+m_pos.z;
+	ht = generator.noise.FillVoxel2d(worldX,worldZ,m_pos,SurfacePerlin,CavePerlin);
 
 	for(int y = 0; y < h; y++)
 				{
+		worldY = y+m_pos.y;
+		float HT=ht+worldY-h/2;
 
-					float worldY = y+m_pos.y;
-	if(y<h/4)
-		caveht=SampleCaves(worldX,worldZ,CavePerlin);
+	if(MakeCaves&&y<h/2-50)
+		HT -= generator.noise.FillVoxel3d(worldX,worldY,worldZ,m_pos);
 
-	if(y > h/groundHt)ht =  mountainHt;
-	else if(y > h/groundHt)ht +=  groundHt+mountainHt;
-		ht+=groundHt;
-		ht-=groundHt/2;
-
-
-		//If we take the heigth value and add the world
-						//the voxels will change from positiove to negative where the surface cuts through the voxel chunk
-		HT = ht +worldY-m_surfaceLevel;
-
-		HT-=caveht;
-		fade = 1f - Mathf.Clamp01(Mathf.Max(m_surfaceLevel, worldY)/64f);
-		if(MakeCaves &&y<h/2-50){
-		cv =SampleCavesreal(worldX ,worldY,worldZ);
-		HT+=cv*fade;
-				}
 		HT/=16;
 		HT = Mathf.Clamp(HT , -0.5f, 0.5f);
+
 		HT+=0.5f;
 		HT*=255;
 
 		m_voxels[x,y,z]=(byte)HT;
 
 		m_voxels[x,y,z]=(byte)Mathf.Clamp(m_voxels[x,y,z],0,255);
+
 	if(y>=h-5&&m_voxels[x,y,z]<=127)m_voxels[x,y,z]=255;
 	if(y<=5&&m_voxels[x,y,z]>=127)m_voxels[x,y,z]=0;
+
 					
 					}
 			}
 		}
 		
-		return m_voxels;
+	return m_voxels;
 		
 		
 	}

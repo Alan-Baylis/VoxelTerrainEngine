@@ -92,12 +92,15 @@ IEnumerator spawnstuff(){
 			RaycastHit hit;
 		for(int i = 0;i < V;i++){
 		if(G<maxGrass ){
-
 		   int v = Random.Range(0,V);
-
+				float r =Random.Range(-2.0f,2.2f);
 		if(Physics.Raycast(Vertices[v]+transform.position,Vector3.up,out hit,500,m_Terrain.mask )==false){
+					G++;
+					if(control[v].a>0.001f&&control[v].a<=0.5f){
+						if(Physics.Raycast(Vertices[v]+transform.position+(Vector3.up*5)+
+						                   (Vector3.right*r)+(Vector3.forward*r),Vector3.down,out hit,20,m_Terrain.mask )){
 
-			int R =0;
+							int R =0;
 
 			float TWeights = 0;
 
@@ -119,8 +122,8 @@ IEnumerator spawnstuff(){
 					
 			//supposed to check if alpha value is greater then x place grass here but couldnt get it to work
 			//maybe someone else knows how to do it
-		if(control[v].a<0.9f&&control[i].a>0.001f){
-			G++;
+		
+			
 
 			chunk.GrassMesh.Add(mesh[R]);
 
@@ -128,12 +131,11 @@ IEnumerator spawnstuff(){
 
 			chunk.Rot.Add(Random.Range(0.0f,360.0f));
 
-		if(Physics.Raycast(Vertices[v]+transform.position+Vector3.up+
-		  (Vector3.right*Random.Range(-1.0f,1.0f)),Vector3.down,out hit,10,m_Terrain.mask )){
+		
 
 			chunk.Pos.Add(hit.point);
 					}
-		else chunk.Pos.Add(Vertices[v]+transform.position);
+		
 				}
 				}
 

@@ -25,6 +25,7 @@ public class VoxelChunk {
 	public List<Material>GrassMat = new List<Material>();
 	public byte[,,]Voxels;
 	public Vector3 m_pos;
+	
 	public GameObject m_mesh;
 	float m_surfaceLevel;
 	public Vector3[] verts;
@@ -212,7 +213,7 @@ public void CreateMeshesAndvoxels(bool MakeNewVoxels){
 		
 		if(MakeNewVoxels && VoxelSaver.GetBool("hasSavedChunk")==false){
 
-			Voxels = MeshFactory.CreateVoxels(Voxels,m_pos,this);
+			Voxels = MeshFactory.CreateVoxels(Voxels,m_pos,this,generator.noise);
 			
 		}
 
@@ -449,6 +450,7 @@ public void CreateMeshesWithVoxels(){
 			m_mesh.isStatic = parent.gameObject.isStatic;
 			m_mesh.transform.parent = parent;
 			m_mesh.transform.localPosition = m_pos;
+			m_mesh.transform.localScale = Vector3.one;
 			mytransform = m_mesh.transform;
 
 		if(col!=null ){

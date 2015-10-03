@@ -9,7 +9,10 @@ using PlayerPrefs = VoxelEngine.SaverVoxel;
 using VoxelEngine.DoubleKeyDictionary;
 namespace VoxelEngine{
 public class VoxelTerrainEngine: MonoBehaviour 
-{
+	{		
+	public bool check;
+	public NoiseModule noise;
+	public ScriptableObject module;
 	public Vector3 Position;
 	public LayerMask mask;
 	public Material m_material;
@@ -20,7 +23,6 @@ public class VoxelTerrainEngine: MonoBehaviour
 	public int MaxTrees;
 	public int MaxGrass;
 	public bool MakeCaves;
-	public int ChunksY;
 	public GameObject []Trees;
 	public float []TreesWeights;
 	public GameObject[] Grass;
@@ -32,15 +34,7 @@ public class VoxelTerrainEngine: MonoBehaviour
 	public int m_surfaceSeed = 4;
 	public int m_voxelWidth = 32, m_voxelHeight = 128, m_voxelLength = 32;
 	public float m_surfaceLevel = 0.0f;
-	public float Frequency;
-	public float Amplitude;
-	public int Oct;
-	public float Gfrequency;
-	public float Gamplitude;
-	public int Goct;
-	public float Cavefrequency;
-	public float Caveamplitude;
-	public int Caveoct;
+	
 	PerlinNoise m_surfacePerlin;
 	PerlinNoise  m_cavePerlin;
 	public Thread Thread;
@@ -68,14 +62,9 @@ public class VoxelTerrainEngine: MonoBehaviour
 	public List<VoxelChunk>RequestedChunks = new List<VoxelChunk>();
 	public List<VoxelChunk>RequestedChunksOrdered = new List<VoxelChunk>();
 	public List<VoxelChunk>NewVoxelChunk = new List<VoxelChunk>();
+	[HideInInspector]
 	public float Dist;
-	bool FirstTime = true;
 	[HideInInspector]
-	public int xx;
-	[HideInInspector]
-	public int yy ;
-	[HideInInspector]
-	public int zz ;
 	public bool cansave;
 	Transform target;
 	public WindZone Zone;
@@ -98,25 +87,9 @@ public void Start(){
 
 				VoxelChunk.generator = Generator;
 
-				MeshFactory.Frequency = Frequency;
-
-				MeshFactory.Amplitude = Amplitude;
-
-				MeshFactory.Oct= Oct;
-
-				MeshFactory.GFrequency = Gfrequency;
-
-				MeshFactory.GAmplitude = Gamplitude;
-
-				MeshFactory.GOct = Goct;
-
-				MeshFactory.CaveFrequency = Cavefrequency;
-
-				MeshFactory.CaveAmplitude = Caveamplitude;
-
-				MeshFactory.CaveOct = Caveoct;
-
 				MeshFactory.m_surfaceLevel = m_surfaceLevel;
+
+				MeshFactory.generator = Generator;
 
 				m_surfacePerlin = new PerlinNoise(m_surfaceSeed);
 
@@ -141,10 +114,7 @@ public void Start(){
 				MarchingCubes.SetWindingOrder(0, 1, 2);
 
 				CanContinue = true;
-
 				StartCoroutine(StartThreads());
-
-
 	}
 		//start all threads
 public IEnumerator StartThreads(){
@@ -291,6 +261,7 @@ public static void SetVoxels(Vector3 voxel,byte value){
 
 
 void Update(){
+
 			Player = transform.InverseTransformPoint( target.position);
 
 			PlayerGlobal = target.position;
@@ -532,7 +503,7 @@ void GenerateTerrains ()
 			//check if the chunk already exists if not create a chunk with x *y * z of voxels
 
 		if(!m_voxelChunk.ContainsKey(x,z)){
-		    Pos = new Vector3(chunkpos.x, Offset.y  , chunkpos.y);
+		    Pos = new Vector3(chunkpos.x, 0 , chunkpos.y);
 
 			//set variables for chunk creation
 			Chunk = new VoxelChunk(Pos, m_voxelWidth, m_voxelHeight, m_voxelLength, m_surfaceLevel);
